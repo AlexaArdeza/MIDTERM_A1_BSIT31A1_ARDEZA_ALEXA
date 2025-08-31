@@ -234,9 +234,12 @@ public class BookService
         {
             Id = Guid.NewGuid(),
             Name = book.Author,
-            ProfileImageUrl = book.AuthorProfileImageUrl
+            ProfileImageUrl = book.AuthorProfileImageUrl,
+            Books = new List<Book>()
         };
+        newAuthor.Books.Add(newBook);   // link book to author
         _authors.Add(newAuthor);
+
 
         var newBookItem = new BookCopy
         {
@@ -259,7 +262,7 @@ public class BookService
             ISBN = b.ISBN,
             Description = b.Description,
             Genre = b.Genre,
-            
+
             PublishedDate = b.PublishedDate,
             CoverImageUrl = _bookCopies.FirstOrDefault(bi => bi.Book.Id == b.Id)?.CoverImageUrl,
             AuthorName = _authors.FirstOrDefault(a => a.Books.Any(bk => bk.Id == b.Id))?.Name,
@@ -299,7 +302,7 @@ public class BookService
         book.Description = vm.Description;
         book.Genre = vm.Genre;
         book.PublishedDate = vm.PublishedDate;
-        
+
 
         var author = _authors.FirstOrDefault(a => a.Id == vm.AuthorId);
         if (author == null)
@@ -308,15 +311,23 @@ public class BookService
             {
                 Id = Guid.NewGuid(),
                 Name = vm.Author,
-                ProfileImageUrl = vm.AuthorProfileImageUrl
+                ProfileImageUrl = vm.AuthorProfileImageUrl,
+                Books = new List<Book>()
             };
+            author.Books.Add(book); // link book to author
             _authors.Add(author);
         }
         else
         {
             author.Name = vm.Author;
             author.ProfileImageUrl = vm.AuthorProfileImageUrl;
+
+            if (!author.Books.Contains(book))
+            {
+                author.Books.Add(book); // ensure book is linked to author
+            }
         }
+
 
         var bookCopy = _bookCopies.FirstOrDefault(bi => bi.Book.Id == vm.BookId);
         if (bookCopy != null)
@@ -355,6 +366,26 @@ public class BookService
             _bookCopies.Remove(bookCopy);
         }
     }
+    //AddBook
+    public void AddBookCopy(Guid bookId, AddBookCopyViewModel model)
+    {
+        var book = _books.FirstOrDefault(b => b.Id == bookId)
+                   ?? throw new KeyNotFoundException("Book not found");
+
+        var newCopy = new BookCopy
+        {
+            Id = Guid.NewGuid(),
+            CoverImageUrl = model.CoverImageUrl,
+            Condition = model.Condition,
+            Source = model.Source,
+            AddedDate = DateTime.Now,
+            Book = book
+        };
+
+        _bookCopies.Add(newCopy);
+    }
+
+
 
     // Singleton pattern
     private static BookService? _instance;

@@ -9,31 +9,32 @@ namespace Library_Management.Models
         public Guid? BookCopyId { get; set; }
 
         [Required(ErrorMessage = "Book title is required.")]
-        [Display(Name ="Book Title asodmflasdfmladsfj")]
-        public string? Title { get; set; }
+        [Display(Name = "Book Title")]
+        public string Title { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "ISBN is required.")]
-        [Display(Name ="ABSCBN")]
-        public string? ISBN { get; set; }
+        [Display(Name = "ISBN")]
+        public string ISBN { get; set; } = string.Empty;
 
+        [Display(Name = "Description")]
         public string? Description { get; set; }
-
 
         [Required(ErrorMessage = "Genre is required.")]
         [Display(Name = "Genre")]
-        public string? Genre { get; set; }
-
+        public string Genre { get; set; } = string.Empty;
 
         [Display(Name = "Published Date")]
         public DateTime? PublishedDate { get; set; }
 
-        public Guid? AuthorId { get; set; }
-
         [Display(Name = "Book Author")]
-        public string? Author { get; set; }
+        public Guid Id { get; set; }
+        public string? Author { get; set; }             // Author name
+        public Guid? AuthorId { get; set; }             // Author reference
+
 
         [Display(Name = "Author Profile Image URL")]
         public string? AuthorProfileImageUrl { get; set; }
+
         [Display(Name = "Cover Image URL")]
         public string? CoverImageUrl { get; set; }
     }

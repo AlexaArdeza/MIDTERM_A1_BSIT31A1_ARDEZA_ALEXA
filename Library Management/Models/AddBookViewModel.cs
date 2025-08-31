@@ -16,5 +16,7 @@
         // Author-specific fields
         public string? Author { get; set; }
         public string? AuthorProfileImageUrl { get; set; }
+        public Guid? AuthorId { get; set; }
+
     }
 }

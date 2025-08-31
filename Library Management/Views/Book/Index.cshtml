@@ -8,7 +8,7 @@
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
     <div class="col">
-        <a asp-action="Create" class="card h-100 shadow-sm border-0 d-flex align-items-center justify-content-center text-decoration-none add-card">
+        <a asp-action="Add" class="card h-100 shadow-sm border-0 d-flex align-items-center justify-content-center text-decoration-none add-card">
             <div class="text-center">
                 <i class="bi bi-plus-circle" style="font-size: 3rem; color: #6c757d;"></i>
                 <p class="mt-2 text-muted">Add Book</p>
@@ -23,14 +23,15 @@
 
                 <div class="book-actions">
                     <a href="javascript:void(0);"
-                                   class="action-btn"
-                                   title="Edit"
-                                   onclick="openEditModal('@book.BookId')">
+                       class="action-btn"
+                       title="Edit"
+                       onclick="openEditModal('@book.BookId')">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a asp-action="Details" asp-route-id="@book.BookId" class="action-btn" title="Details"/>
 
-                    <a asp-action="Delete" asp-route-id="@book.BookId" class="action-btn" title="Delete">
+                    <a asp-action="Details" asp-route-id="@book.BookId" class="action-btn" title="Details" />
+
+                    <a asp-action="DeleteConfirm" asp-route-id="@book.BookId" class="action-btn" title="Delete">
                         <i class="bi bi-trash"></i>
                     </a>
                 </div>
